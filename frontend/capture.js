@@ -24,6 +24,8 @@
     canvas = document.getElementById('canvas');
     photo = document.getElementById('photo');
     startbutton = document.getElementById('startbutton');
+    trainbutton = document.getElementById('trainbutton');
+    validatebutton = document.getElementById('validatebutton');
 
     navigator.mediaDevices.getUserMedia({video: true, audio: false})
     .then(function(stream) {
@@ -55,6 +57,43 @@
 
     startbutton.addEventListener('click', function(ev){
       takepicture();
+      ev.preventDefault();
+    }, false);
+
+    trainbutton.addEventListener('click', function(ev){
+      alert('button clicked');
+      fetch('http://localhost:8080/train', {
+        method: 'POST',
+        body: {}
+      })
+      .then(result => {
+        console.log('Success:', result);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+      ev.preventDefault();
+    }, false);
+
+    validatebutton.addEventListener('click', function(ev){
+      alert('button clicked');
+      var context = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
+      context.drawImage(video, 0, 0, width, height);
+    
+      var data = canvas.toDataURL('image/png');
+      var imageData = data.replace("data:image/png;base64,", "");
+      fetch('http://localhost:8080/validate', {
+        method: 'POST',
+        body: imageData
+      })
+      .then(result => {
+        console.log('Success:', result);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
       ev.preventDefault();
     }, false);
     
@@ -113,7 +152,7 @@
   // Set up our event listener to run the startup process
   // once loading is complete.
   window.addEventListener('load', startup, false);
-
+  
 
   
 })();
