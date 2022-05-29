@@ -139,6 +139,8 @@ func Predict2() {
     if err != nil {
         panic(err)
     }
+    fmt.Println("response body")
+    fmt.Printf("response body:%v\n", resp.Body)
 
     b, err := io.ReadAll(resp.Body)
 
@@ -173,17 +175,17 @@ func Predict(fileName string) (result string, err error) {
     req.Header.Set("Content-Type", "application/octet-stream")
     req.Header.Set("Prediction-Key", "1aa008d180f7491b8fc10498e08f6eab")
 
-    // resp, err := predictor.ClassifyImageSender(req)
+    resp, err := predictor.ClassifyImageSender(req)
 
     if err != nil {
         fmt.Printf("=======%v\n", err)
         panic(err)
     }
 
-    // b, err := io.ReadAll(resp.Body)
+    b, err := io.ReadAll(resp.Body)
 
-    // return string(b), err
-    return "", err
+    return string(b), err
+    // return "", err
 }
 
 

@@ -4,6 +4,7 @@ import (
 	"backend/customvision"
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -67,7 +68,7 @@ func saveImage(c *gin.Context) {
 		panic(err)
 	}
 
-	path := "/Users/honglinma/Workspace/FaceRecogination/backend/imagesFace"
+	path := "/app/imagesFace"
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 		err := os.Mkdir(path, os.ModePerm)
 		if err != nil {
@@ -118,7 +119,7 @@ func validate(c *gin.Context) {
 		panic(err)
 	}
 
-	path := "/Users/honglinma/Workspace/FaceRecogination/backend/imagesFace"
+	path := "/app/imagesFace"
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 		err := os.Mkdir(path, os.ModePerm)
 		if err != nil {
@@ -140,9 +141,17 @@ func validate(c *gin.Context) {
 
 
 	result, err := customvision.Predict(fileName)
-	if err != nil {
-		c.String(200, result)
+
+	fmt.Printf("%v\n", err != nil)
+	fmt.Printf("%v\n", result)
+
+	if err == nil {
+		c.JSON(200, result)
+		// c.JSON(200, gin.H{
+		// 	"message": "validation",
+		// })
 	} else {
+		fmt.Println("111")
 		c.JSON(500, gin.H{
 			"message": err.Error(),
 		})

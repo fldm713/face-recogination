@@ -76,7 +76,6 @@
     }, false);
 
     validatebutton.addEventListener('click', function(ev){
-      alert('button clicked');
       var context = canvas.getContext('2d');
       canvas.width = width;
       canvas.height = height;
@@ -88,8 +87,11 @@
         method: 'POST',
         body: imageData
       })
-      .then(result => {
-        console.log('Success:', result);
+      .then(result => result.json())
+      .then(data => {
+        console.log(data)
+        predictions = JSON.parse(data).predictions
+        document.getElementById("predict-result").innerHTML = JSON.stringify(predictions);
       })
       .catch(error => {
         console.error('Error:', error);
