@@ -1,3 +1,16 @@
 Project id: 3179ff3c-1e72-46d5-9905-c1ad9844ec14
 Hemlock tag id: e1ac5ab5-110e-4289-9cce-d3c0928e0438
 Hemlock tag id: a44955a5-8dd3-41fe-9c5a-535f15122c85
+
+
+az acr create --resource-group Docker --name DockerRegistry2022 --sku Basic
+
+az acr build --image frontend --registry dockerregistry2022honglin --file Dockerfile . 
+az acr build --image backend --registry dockerregistry2022honglin --file Dockerfile .
+
+docker run -d --expose=80 --name mhlbackend_0_fc6fb931 
+-e WEBSITES_ENABLE_APP_SERVICE_STORAGE=false -e WEBSITE_SITE_NAME=mhlbackend 
+-e WEBSITE_AUTH_ENABLED=False -e PORT=80 -e WEBSITE_ROLE_INSTANCE_ID=0 
+-e WEBSITE_HOSTNAME=mhlbackend.azurewebsites.net 
+-e WEBSITE_INSTANCE_ID=c9b3f351c101ea193f29b213bbb2c7a25e0f753608db2fdfb77d82bc11fbe1b1 
+-e WEBSITE_USE_DIAGNOSTIC_SERVER=False mhlregistry.azurecr.io/backend:latest

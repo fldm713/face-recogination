@@ -19,6 +19,8 @@
   var photo = null;
   var startbutton = null;
 
+  const backendUrl = 'http://localhost:9000';
+
   function startup() {
     video = document.getElementById('video');
     canvas = document.getElementById('canvas');
@@ -55,6 +57,8 @@
     //   }
     // }, false);
 
+
+
     startbutton.addEventListener('click', function(ev){
       takepicture();
       ev.preventDefault();
@@ -62,7 +66,7 @@
 
     trainbutton.addEventListener('click', function(ev){
       alert('button clicked');
-      fetch('http://localhost:8080/train', {
+      fetch(backendUrl + '/train', {
         method: 'POST',
         body: {}
       })
@@ -83,7 +87,7 @@
     
       var data = canvas.toDataURL('image/png');
       var imageData = data.replace("data:image/png;base64,", "");
-      fetch('http://localhost:8080/validate', {
+      fetch(backendUrl + '/validate', {
         method: 'POST',
         body: imageData
       })
@@ -139,7 +143,7 @@
   function post_image(data) {
     console.log(data);
     var imageData = data.replace("data:image/png;base64,", "");
-    fetch('http://localhost:8080/image', {
+    fetch(backendUrl + '/image', {
     method: 'POST',
     body: imageData
     })

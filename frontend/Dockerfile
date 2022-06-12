@@ -1,4 +1,5 @@
-FROM httpd:2.4.53-alpine
-
-COPY . /usr/local/apache2/htdocs/
+FROM python:3.8.2-alpine
+WORKDIR /frontend
+COPY . /frontend
+CMD [ "python3", "-m" , "http.server", "80"]
 

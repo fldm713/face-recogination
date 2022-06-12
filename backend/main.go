@@ -45,15 +45,20 @@ func main() {
 			"message": "pong",
 		})
 	})
-	
 
+	port := "80"
+	val, ok := os.LookupEnv("GO_HTTP_PORT")
+	if ok {
+		port = val
+	}
+	
 	r.POST("/image", saveImage)
 
 	r.POST("/train", train)
 
 	r.POST("/validate", validate)
 
-	r.Run("0.0.0.0:8080") // listen and serve on 0.0.0.0:8080
+	r.Run("0.0.0.0:"+port) // listen and serve on 0.0.0.0:8080
 
 	
 }
@@ -68,7 +73,7 @@ func saveImage(c *gin.Context) {
 		panic(err)
 	}
 
-	path := "/app/imagesFace"
+	path := "/images"
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 		err := os.Mkdir(path, os.ModePerm)
 		if err != nil {
@@ -119,7 +124,7 @@ func validate(c *gin.Context) {
 		panic(err)
 	}
 
-	path := "/app/imagesFace"
+	path := "/images"
 	if _, err := os.Stat(path); errors.Is(err, os.ErrNotExist) {
 		err := os.Mkdir(path, os.ModePerm)
 		if err != nil {
