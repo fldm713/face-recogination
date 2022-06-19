@@ -26,5 +26,5 @@ jobs:
             username: mhlregistry
             password: 7US9KlB+1aNXU8vzL4i5T3O9PuX1M5kL
         - run: |
-            docker build . -t mhlregistry.azurecr.io/backend:${{ github.sha }}
+            docker build --file ./backend/Dockerfile -t mhlregistry.azurecr.io/backend:${{ github.sha }} 
             docker push mhlregistry.azurecr.io/backend:${{ github.sha }}
