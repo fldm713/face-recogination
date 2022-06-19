@@ -17,7 +17,7 @@ jobs:
         steps:
         # checkout the repo
         - name: 'Checkout GitHub Action'
-          uses: actions/checkout@may15th
+          uses: actions/checkout@main
         
         - name: 'Build and push image'
           uses: azure/docker-login@v1
