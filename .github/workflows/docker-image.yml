@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "may15th" ]
+
+jobs:
+  build-and-deploy:
+        runs-on: ubuntu-latest
+        steps:
+        # checkout the repo
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@may15th
+        
+        - name: 'Build and push image'
+          uses: azure/docker-login@v1
+          with:
+            login-server: mhlregistry.azurecr.io
+            username: mhlregistry
+            password: 7US9KlB+1aNXU8vzL4i5T3O9PuX1M5kL
+        - run: |
+            docker build . -t mhlregistry.azurecr.io/backend:${{ github.sha }}
+            docker push mhlregistry.azurecr.io/backend:${{ github.sha }}
