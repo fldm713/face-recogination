@@ -5,8 +5,8 @@ Hemlock tag id: a44955a5-8dd3-41fe-9c5a-535f15122c85
 
 az acr create --resource-group Docker --name DockerRegistry2022 --sku Basic
 
-az acr build --image frontend --registry dockerregistry2022honglin --file Dockerfile . 
-az acr build --image backend --registry dockerregistry2022honglin --file Dockerfile .
+az acr build --image frontend --registry mhlregistry --file Dockerfile . 
+az acr build --image backend --registry mhlregistry --file Dockerfile .
 
 docker run -d --expose=80 --name mhlbackend_0_fc6fb931 
 -e WEBSITES_ENABLE_APP_SERVICE_STORAGE=false -e WEBSITE_SITE_NAME=mhlbackend 
